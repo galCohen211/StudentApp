@@ -91,24 +91,28 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintWidth_percent="0.8">
 
-        <Button
-            android:id="@+id/new_student_btn_cancel"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="Cancel"
-            android:textColor="@android:color/black" />
-
-        <Button
-            android:id="@+id/new_student_btn_save"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:backgroundTint="@android:color/transparent"
-            android:text="Save"
-            android:textColor="@android:color/black" />
-
     </LinearLayout>
+
+    <Button
+        android:id="@+id/new_student_btn_save"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        android:text="Save"
+        android:textColor="@android:color/black"
+        tools:layout_editor_absoluteX="282dp"
+        tools:layout_editor_absoluteY="636dp" />
+
+    <Button
+        android:id="@+id/new_student_btn_cancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:backgroundTint="@android:color/transparent"
+        android:text="Cancel"
+        android:textColor="@android:color/black"
+        tools:layout_editor_absoluteX="41dp"
+        tools:layout_editor_absoluteY="636dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
