@@ -5,15 +5,16 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.BaseAdapter
+import androidx.activity.result.ActivityResultLauncher
 import com.example.studentapp.R
 import com.example.studentapp.StudentDetails
 import com.example.studentapp.models.Student
 
-class StudentAdapter(private val context: Context, private val students: MutableList<Student>) : BaseAdapter() {
+class StudentAdapter(private val context: Context, private val students: MutableList<Student>, private val launcher: ActivityResultLauncher<Intent>) : BaseAdapter() {
 
     override fun getCount(): Int = students.size
 
@@ -47,7 +48,7 @@ class StudentAdapter(private val context: Context, private val students: Mutable
                 putExtra("phone", student.phone)
                 putExtra("address", student.address)
             }
-            context.startActivity(intent)
+            launcher.launch(intent)
         }
 
         return view
