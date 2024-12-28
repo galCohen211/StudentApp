@@ -1,20 +1,23 @@
 package com.example.studentapp
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StudentList : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_student_list)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
+
+        val addStudentButton: FloatingActionButton = findViewById(R.id.student_list_add_btn)
+
+        // Set an OnClickListener to navigate to AddStudentActivity
+        addStudentButton.setOnClickListener {
+            // Create an Intent to start the AddStudentActivity
+            val intent = Intent(this, NewStudent::class.java)
+            startActivity(intent) // Start the Activity
         }
     }
 }

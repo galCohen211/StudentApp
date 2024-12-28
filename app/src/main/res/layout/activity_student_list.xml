@@ -12,13 +12,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/fabAddStudent"
+        app:layout_constraintBottom_toTopOf="@+id/student_list_add_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddStudent"
+        android:id="@+id/student_list_add_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription="@drawable/add_student"
