@@ -94,25 +94,27 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/new_student_btn_save"
+        android:id="@+id/add_student_save_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="@android:color/transparent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="4dp"
         android:text="Save"
-        android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="282dp"
-        tools:layout_editor_absoluteY="636dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_student_cancel_button"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/new_student_btn_cancel"
+        android:id="@+id/add_student_cancel_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:backgroundTint="@android:color/transparent"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="8dp"
         android:text="Cancel"
-        android:textColor="@android:color/black"
-        tools:layout_editor_absoluteX="41dp"
-        tools:layout_editor_absoluteY="636dp" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/add_student_save_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/add_student_save_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
