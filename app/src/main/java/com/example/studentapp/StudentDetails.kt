@@ -11,14 +11,14 @@ class StudentDetails : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_details)
 
-        val avatarImageView: ImageView = findViewById(R.id.details_student_avatar)
-        val nameTextView: TextView = findViewById(R.id.details_student_name)
-        val idTextView: TextView = findViewById(R.id.details_student_id)
-        val phoneTextView: TextView = findViewById(R.id.details_student_phone)
-        val addressTextView: TextView = findViewById(R.id.details_student_address)
-        val studentCheckBox: CheckBox = findViewById(R.id.details_student_checkbox)
+        val avatarImage: ImageView = findViewById(R.id.details_student_avatar)
+        val nameStudent: TextView = findViewById(R.id.details_student_name)
+        val idStudent: TextView = findViewById(R.id.details_student_id)
+        val phoneStudent: TextView = findViewById(R.id.details_student_phone)
+        val addressStudent: TextView = findViewById(R.id.details_student_address)
+        val checkBoxStudent: CheckBox = findViewById(R.id.details_student_checkbox)
 
-        // Retrieve data from intent
+
         val name = intent.getStringExtra("name")
         val id = intent.getStringExtra("id")
         val avatarUrl = intent.getStringExtra("avatarUrl")
@@ -26,12 +26,12 @@ class StudentDetails : AppCompatActivity() {
         val phone = intent.getStringExtra("phone")
         val address = intent.getStringExtra("address")
 
-        // Bind data to views
-        nameTextView.text = name
-        idTextView.text = id
-        phoneTextView.text = phone
-        addressTextView.text = address
-        studentCheckBox.isChecked = isChecked
-        avatarImageView.setImageResource(R.drawable.student) // Use local image
+
+        nameStudent.text = name
+        idStudent.text = id
+        phoneStudent.text = phone
+        addressStudent.text = address
+        checkBoxStudent.isChecked = isChecked
+        avatarImage.setImageResource(R.drawable.student)
     }
 }
