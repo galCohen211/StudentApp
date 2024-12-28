@@ -3,6 +3,7 @@ package com.example.studentapp
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ListView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studentapp.adapter.StudentAdapter
 import com.example.studentapp.models.Student
@@ -10,40 +11,77 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class StudentList : AppCompatActivity() {
 
-    private val students = mutableListOf<Student>()
+    private val students: MutableList<Student> = mutableListOf()
     private lateinit var adapter: StudentAdapter
+
+    private val newStudentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                handleAddStudent(result.data)
+            }
+        }
+
+    private val editStudentLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                handleEditOrDeleteStudent(result.data)
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
 
         val listView: ListView = findViewById(R.id.students_list_view)
-        val addStudentButton: FloatingActionButton = findViewById(R.id.student_list_add_btn)
+        val addButton: FloatingActionButton = findViewById(R.id.student_list_add_btn)
 
         // Initialize the adapter
-        adapter = StudentAdapter(this, students)
+        adapter = StudentAdapter(this, students, editStudentLauncher)
         listView.adapter = adapter
 
         // Add new student button listener
-        addStudentButton.setOnClickListener {
+        addButton.setOnClickListener {
             val intent = Intent(this, NewStudent::class.java)
-            startActivityForResult(intent, 100)
+            newStudentLauncher.launch(intent)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 100 && resultCode == RESULT_OK) {
-            val name = data?.getStringExtra("name") ?: ""
-            val id = data?.getStringExtra("id") ?: ""
-            val phone = data?.getStringExtra("phone") ?: ""
-            val address = data?.getStringExtra("address") ?: ""
-            val isChecked = data?.getBooleanExtra("isChecked", false) ?: false
+    private fun handleAddStudent(data: Intent?) {
+        val name = data?.getStringExtra("name") ?: return
+        val id = data.getStringExtra("id") ?: return
+        val phone = data.getStringExtra("phone") ?: ""
+        val address = data.getStringExtra("address") ?: ""
+        val isChecked = data.getBooleanExtra("isChecked", false)
 
-            // Add new student to the list
-            val newStudent = Student(name, id, "", isChecked, phone, address)
-            students.add(newStudent)
-            adapter.notifyDataSetChanged()
+        // Add the new student to the list
+        val newStudent = Student(name, id, "", isChecked, phone, address)
+        students.add(newStudent)
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun handleEditOrDeleteStudent(data: Intent?) {
+        val delete = data?.getBooleanExtra("delete", false) ?: false
+        val id = data?.getStringExtra("id") ?: return
+
+        if (delete) {
+            // Remove the student from the list
+            students.removeAll { it.id == id }
+        } else {
+            // Update the student's details
+            val name = data.getStringExtra("name") ?: ""
+            val phone = data.getStringExtra("phone") ?: ""
+            val address = data.getStringExtra("address") ?: ""
+            val isChecked = data.getBooleanExtra("isChecked", false)
+
+            val student = students.find { it.id == id }
+            student?.apply {
+                this.name = name
+                this.phone = phone
+                this.address = address
+                this.isChecked = isChecked
+            }
         }
+
+        adapter.notifyDataSetChanged()
     }
 }
