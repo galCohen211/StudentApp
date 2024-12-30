@@ -1,10 +1,12 @@
 package com.example.studentapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 
 class NewStudent : AppCompatActivity() {
@@ -15,6 +17,14 @@ class NewStudent : AppCompatActivity() {
 
         val saveButton: Button = findViewById(R.id.add_student_save_button)
         val cancelButton: Button = findViewById(R.id.add_student_cancel_button)
+
+        val backButton: ImageButton = findViewById(R.id.new_student_back_button)
+        backButton.setOnClickListener {
+            val data = Intent()
+            data.putExtra("result_key", "Some result data")
+            setResult(Activity.RESULT_OK, data)
+            finish()
+        }
 
         val name: EditText = findViewById(R.id.new_student_name)
         val id: EditText = findViewById(R.id.new_student_id)
