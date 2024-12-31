@@ -1,9 +1,11 @@
 package com.example.studentapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -33,6 +35,14 @@ class StudentDetails : AppCompatActivity() {
         val addressStudent: TextView = findViewById(R.id.details_student_address)
         val checkBox: CheckBox = findViewById(R.id.details_student_checkbox)
         val editButton: Button = findViewById(R.id.student_details_edit_btn)
+
+        val backButton: ImageButton = findViewById(R.id.details_student_back_button)
+        backButton.setOnClickListener {
+            val data = Intent()
+            data.putExtra("result_key", "Some result data")
+            setResult(Activity.RESULT_OK, data)
+            finish()
+        }
 
 
         val name = intent.getStringExtra("name")

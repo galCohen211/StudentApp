@@ -1,11 +1,13 @@
 package com.example.studentapp
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
+import android.widget.ImageButton
 
 class EditStudent : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +21,14 @@ class EditStudent : AppCompatActivity() {
         val cancelButton: Button = findViewById(R.id.edit_student_btn_cancel)
         val saveButton: Button = findViewById(R.id.edit_student_btn_save)
         val deleteButton: Button = findViewById(R.id.edit_student_btn_delete)
+
+        val backButton: ImageButton = findViewById(R.id.edit_student_back_button)
+        backButton.setOnClickListener {
+            val data = Intent()
+            data.putExtra("result_key", "Some result data")
+            setResult(Activity.RESULT_OK, data)
+            finish()
+        }
 
         val name = intent.getStringExtra("name")
         val id = intent.getStringExtra("id")

@@ -7,6 +7,17 @@
     android:layout_height="match_parent"
     tools:context=".StudentDetails">
 
+    <ImageButton
+        android:id="@+id/details_student_back_button"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@drawable/ic_arrow_back"
+        android:contentDescription="Back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="16dp" />
+
     <ImageView
         android:id="@+id/details_student_avatar"
         android:layout_width="100dp"
