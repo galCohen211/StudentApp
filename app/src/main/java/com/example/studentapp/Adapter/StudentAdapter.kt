@@ -5,52 +5,56 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
+import androidx.recyclerview.widget.RecyclerView
 import com.example.studentapp.R
 import com.example.studentapp.StudentDetails
 import com.example.studentapp.models.Student
 
-class StudentAdapter(private val context: Context, private val students: MutableList<Student>, private val launcher: ActivityResultLauncher<Intent>) : BaseAdapter() {
+class StudentAdapter(
+    private val context: Context,
+    private val students: MutableList<Student>,
+    private val launcher: ActivityResultLauncher<Intent>
+) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
 
-    override fun getCount(): Int = students.size
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
+        val view = LayoutInflater.from(context).inflate(R.layout.student_list_row, parent, false)
+        return StudentViewHolder(view)
+    }
 
-    override fun getItem(position: Int): Any = students[position]
-
-    override fun getItemId(position: Int): Long = position.toLong()
-
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val inflater = LayoutInflater.from(context)
-        val view = convertView ?: inflater.inflate(R.layout.student_list_row, parent, false)
-
+    override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         val student = students[position]
+        holder.bind(student)
+    }
 
-        val nameTextView: TextView = view.findViewById(R.id.student_row_name_text_view)
-        val idTextView: TextView = view.findViewById(R.id.student_row_id_text_view)
-        val avatarImageView: ImageView = view.findViewById(R.id.student_row_image_view)
-        val studentCheckBox: CheckBox = view.findViewById(R.id.student_row_check_box)
+    override fun getItemCount(): Int = students.size
 
-        nameTextView.text = student.name
-        idTextView.text = student.id
-        avatarImageView.setImageResource(R.drawable.student) // Use local image
-        studentCheckBox.isChecked = student.isChecked
+    inner class StudentViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val nameTextView: TextView = view.findViewById(R.id.student_row_name_text_view)
+        private val idTextView: TextView = view.findViewById(R.id.student_row_id_text_view)
+        private val avatarImageView: ImageView = view.findViewById(R.id.student_row_image_view)
+        private val studentCheckBox: CheckBox = view.findViewById(R.id.student_row_check_box)
 
-        // Set click listener to open StudentDetails activity
-        view.setOnClickListener {
-            val intent = Intent(context, StudentDetails::class.java).apply {
-                putExtra("name", student.name)
-                putExtra("id", student.id)
-                putExtra("avatarUrl", student.avatarUrl)
-                putExtra("isChecked", student.isChecked)
-                putExtra("phone", student.phone)
-                putExtra("address", student.address)
+        fun bind(student: Student) {
+            nameTextView.text = student.name
+            idTextView.text = student.id
+            avatarImageView.setImageResource(R.drawable.student) // השתמש בתמונה מקומית
+            studentCheckBox.isChecked = student.isChecked
+
+            itemView.setOnClickListener {
+                val intent = Intent(context, StudentDetails::class.java).apply {
+                    putExtra("name", student.name)
+                    putExtra("id", student.id)
+                    putExtra("avatarUrl", student.avatarUrl)
+                    putExtra("isChecked", student.isChecked)
+                    putExtra("phone", student.phone)
+                    putExtra("address", student.address)
+                }
+                launcher.launch(intent)
             }
-            launcher.launch(intent)
         }
-
-        return view
     }
 }

@@ -49,6 +49,7 @@ class EditStudent : AppCompatActivity() {
         saveButton.setOnClickListener {
             val resultIntent = Intent().apply {
                 putExtra("name", nameEditText.text.toString())
+                putExtra("oldId", intent.getStringExtra("id"))
                 putExtra("id", idEditText.text.toString())
                 putExtra("phone", phoneEditText.text.toString())
                 putExtra("address", addressEditText.text.toString())
@@ -62,6 +63,7 @@ class EditStudent : AppCompatActivity() {
             val resultIntent = Intent().apply {
                 putExtra("delete", true)
                 putExtra("id", id)
+                putExtra("oldId", id)
             }
             setResult(RESULT_OK, resultIntent)
             finish()

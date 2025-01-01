@@ -2,12 +2,14 @@ package com.example.studentapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ListView
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studentapp.adapter.StudentAdapter
 import com.example.studentapp.models.Student
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class StudentList : AppCompatActivity() {
 
@@ -32,12 +34,13 @@ class StudentList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
 
-        val listView: ListView = findViewById(R.id.students_list_view)
+        val recyclerView: RecyclerView = findViewById(R.id.students_recycler_view)
         val addButton: FloatingActionButton = findViewById(R.id.student_list_add_btn)
 
         // Initialize the adapter
         adapter = StudentAdapter(this, students, editStudentLauncher)
-        listView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
         // Add new student button listener
         addButton.setOnClickListener {
@@ -62,10 +65,16 @@ class StudentList : AppCompatActivity() {
     private fun handleEditOrDeleteStudent(data: Intent?) {
         val delete = data?.getBooleanExtra("delete", false) ?: false
         val id = data?.getStringExtra("id") ?: return
+        val oldId = data?.getStringExtra("oldId") ?: return
 
         if (delete) {
             // Remove the student from the list
-            students.removeAll { it.id == id }
+            val studentToRemove = students.find { it.id == oldId }
+            if (studentToRemove != null) {
+                students.remove(studentToRemove)
+                Log.d("StudentList", "Student removed: $oldId")
+
+            }
         } else {
             // Update the student's details
             val name = data.getStringExtra("name") ?: ""
@@ -73,12 +82,13 @@ class StudentList : AppCompatActivity() {
             val address = data.getStringExtra("address") ?: ""
             val isChecked = data.getBooleanExtra("isChecked", false)
 
-            val student = students.find { it.id == id }
+            val student = students.find { it.id == oldId }
             student?.apply {
                 this.name = name
                 this.phone = phone
                 this.address = address
                 this.isChecked = isChecked
+                this.id = id
             }
         }
 
