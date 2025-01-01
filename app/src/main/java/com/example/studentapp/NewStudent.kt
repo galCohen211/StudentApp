@@ -53,8 +53,11 @@ class NewStudent : AppCompatActivity() {
         }
 
         cancelButton.setOnClickListener {
-            // Close the activity
-            finish()
+            name.text.clear()
+            id.text.clear()
+            phone.text.clear()
+            address.text.clear()
+            checkbox.isChecked = false
         }
     }
 }

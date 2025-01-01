@@ -7,8 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".StudentList">
 
-    <ListView
-        android:id="@+id/students_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/students_recycler_view"
         android:layout_width="409dp"
         android:layout_height="729dp"
         app:layout_constraintBottom_toBottomOf="parent"

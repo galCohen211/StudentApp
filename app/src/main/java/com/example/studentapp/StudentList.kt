@@ -3,12 +3,13 @@ package com.example.studentapp
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studentapp.adapter.StudentAdapter
 import com.example.studentapp.models.Student
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 class StudentList : AppCompatActivity() {
 
@@ -33,12 +34,13 @@ class StudentList : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
 
-        val listView: ListView = findViewById(R.id.students_list_view)
+        val recyclerView: RecyclerView = findViewById(R.id.students_recycler_view)
         val addButton: FloatingActionButton = findViewById(R.id.student_list_add_btn)
 
         // Initialize the adapter
         adapter = StudentAdapter(this, students, editStudentLauncher)
-        listView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
 
         // Add new student button listener
         addButton.setOnClickListener {
