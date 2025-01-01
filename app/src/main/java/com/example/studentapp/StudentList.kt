@@ -2,6 +2,7 @@ package com.example.studentapp
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -62,10 +63,16 @@ class StudentList : AppCompatActivity() {
     private fun handleEditOrDeleteStudent(data: Intent?) {
         val delete = data?.getBooleanExtra("delete", false) ?: false
         val id = data?.getStringExtra("id") ?: return
+        val oldId = data?.getStringExtra("oldId") ?: return
 
         if (delete) {
             // Remove the student from the list
-            students.removeAll { it.id == id }
+            val studentToRemove = students.find { it.id == oldId }
+            if (studentToRemove != null) {
+                students.remove(studentToRemove)
+                Log.d("StudentList", "Student removed: $oldId")
+
+            }
         } else {
             // Update the student's details
             val name = data.getStringExtra("name") ?: ""
@@ -73,12 +80,13 @@ class StudentList : AppCompatActivity() {
             val address = data.getStringExtra("address") ?: ""
             val isChecked = data.getBooleanExtra("isChecked", false)
 
-            val student = students.find { it.id == id }
+            val student = students.find { it.id == oldId }
             student?.apply {
                 this.name = name
                 this.phone = phone
                 this.address = address
                 this.isChecked = isChecked
+                this.id = id
             }
         }
 
